@@ -1,10 +1,19 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-
 import { environment } from '../../environments/environment';
 
 const JWTS_LOCAL_KEY = 'JWTS_LOCAL_KEY';
-const JWTS_ACTIVE_INDEX_KEY = 'JWTS_ACTIVE_INDEX_KEY';
+
+function parseJwt (token) {
+    // https://stackoverflow.com/questions/38552003/how-to-decode-jwt-token-in-javascript
+  var base64Url = token.split('.')[1];
+  var base64 = decodeURIComponent(atob(base64Url).split('').map((c)=>{
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+
+  return base64;
+};
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +23,22 @@ export class AuthService {
   audience = environment.auth0.audience;
   clientId = environment.auth0.clientId;
   callbackURL = environment.auth0.callbackURL;
+  loggedOutURL = environment.auth0.loggedOutURL;
 
   token: string;
+  decodedToken: string;
   payload: any;
 
   constructor() { }
+
+  build_logout_link() {
+    let link = 'https://';
+    link += this.url + '.auth0.com';
+    link += '/v2/logout?';
+    link += 'client_id=' + this.clientId + '&';
+    link += 'returnTo=' + this.loggedOutURL;
+    return link;
+  }
 
   build_login_link(callbackPath = '') {
     let link = 'https://';
@@ -39,6 +59,7 @@ export class AuthService {
     if ( fragment[0] === 'access_token' ) {
       // add the access token to the jwt
       this.token = fragment[1];
+      this.decodedToken = parseJwt(this.token);
       // save jwts to localstore
       this.set_jwt();
     }
@@ -55,6 +76,7 @@ export class AuthService {
     this.token = localStorage.getItem(JWTS_LOCAL_KEY) || null;
     if (this.token) {
       this.decodeJWT(this.token);
+      this.decodedToken = parseJwt(this.token);
     }
   }
 
@@ -69,10 +91,15 @@ export class AuthService {
   }
 
   logout() {
-    this.token = '';
-    this.payload = null;
-    this.set_jwt();
-    window.location.href = "/logout"
+      this.token = '';
+      this.decodedToken = '';
+      this.payload = null;
+      this.set_jwt();
+      setTimeout(() => {
+        window.location.href = this.build_logout_link();
+      })
+
+      
   }
 
   can(permission: string) {

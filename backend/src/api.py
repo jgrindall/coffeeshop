@@ -1,12 +1,13 @@
 from flask import Flask, request, jsonify, abort
 from .database.models import db_drop_and_create_all, setup_db, Drink
-from .auth.auth import requires_auth, logout
+from .auth.auth import requires_auth, auth_logout
+import json
 
 def api(app):
-    
+
     @app.route('/logout')
     def logout():
-        logout()
+        auth_logout()
 
     @app.route('/drinks')
     def get_drinks():
@@ -17,7 +18,7 @@ def api(app):
         })
 
     
-    @app.route('/drinks-detail')
+    @app.route('/drinksdetail')
     @requires_auth('get:drinksdetail')
     def get_drinks_detail(payload):
         drinks = Drink.query.all()
@@ -37,7 +38,7 @@ def api(app):
         if title is None or recipe is None or not isinstance(recipe, list) or len(recipe) == 0 or title.strip() == '':
             abort(422)
 
-        drink = Drink(title=title, recipe=recipe)
+        drink = Drink(title=title, recipe=json.dumps(recipe))
         drink.insert()
 
         return jsonify({
@@ -61,7 +62,7 @@ def api(app):
             drink.title = title
 
         if recipe is not None and isinstance(recipe, list) and len(recipe) >= 1:
-            drink.recipe = recipe
+            drink.recipe = json.dumps(recipe)
 
         drink.update()
 

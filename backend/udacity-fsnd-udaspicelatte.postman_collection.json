@@ -45,7 +45,7 @@
 					"response": []
 				},
 				{
-					"name": "/drinks-detail",
+					"name": "/drinksdetail",
 					"event": [
 						{
 							"listen": "test",
@@ -64,12 +64,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/drinks-detail",
+							"raw": "{{host}}/drinksdetail",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"drinks-detail"
+								"drinksdetail"
 							]
 						}
 					},
@@ -212,7 +212,7 @@
 					"response": []
 				},
 				{
-					"name": "/drinks-detail",
+					"name": "/drinksdetail",
 					"event": [
 						{
 							"listen": "test",
@@ -231,12 +231,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/drinks-detail",
+							"raw": "{{host}}/drinksdetail",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"drinks-detail"
+								"drinksdetail"
 							]
 						}
 					},
@@ -421,7 +421,7 @@
 					"response": []
 				},
 				{
-					"name": "/drinks-detail",
+					"name": "/drinksdetail",
 					"event": [
 						{
 							"listen": "test",
@@ -445,12 +445,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/drinks-detail",
+							"raw": "{{host}}/drinksdetail",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"drinks-detail"
+								"drinksdetail"
 							]
 						}
 					},

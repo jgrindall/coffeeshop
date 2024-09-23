@@ -150,12 +150,17 @@ def requires_auth(permission=''):
     return requires_auth_decorator
 
 
-def logout():
+def auth_logout():
+    print("Logging out", flush=True)
     auth0_logout_url = f"https://{AUTH0_DOMAIN}/v2/logout"
     # Parameters for Auth0 logout
-    return_to = "http://localhost:8100/logout"
+    return_to = "http://localhost:8100"
     params = f"?client_id={YOUR_CLIENT_ID}&returnTo={return_to}"
     
     # Redirect the user to the Auth0 logout URL
-    return redirect(f"{auth0_logout_url}{params}")
+
+    url = f"{auth0_logout_url}{params}"
+    print("Redirecting to Auth0 logout URL", url, flush=True)
+
+    return redirect(url)
     

@@ -5,6 +5,7 @@ from flask_cors import CORS
 from .database.models import setup_db, db_drop_and_create_all
 from .api import api
 from .errors import errors
+from .cors import cors
 
 def create_app(test_config=None):
 
@@ -17,8 +18,9 @@ def create_app(test_config=None):
     
     CORS(app)
 
-    db_drop_and_create_all()
+    #db_drop_and_create_all()
 
+    cors(app)
     api(app)
     errors(app)
 

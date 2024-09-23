@@ -10,5 +10,6 @@ export const environment = {
     audience: 'coffee', // the audience set for the auth0 app
     clientId: 'yut351BqpWHZtoP972bOlg6ZQCt3Bpub', // the client id generated for the auth0 app
     callbackURL: 'http://localhost:8100', // the base url of the running ionic application. 
+    loggedOutURL: 'http://localhost:8100', // the base url of the running ionic application. 
   }
 };
