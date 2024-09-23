@@ -1,5 +1,5 @@
 import json
-from flask import request
+from flask import request, redirect
 from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
@@ -8,7 +8,7 @@ from urllib.request import urlopen
 AUTH0_DOMAIN = 'dev-rjs5hjuhg713iw0w.us.auth0.com'
 ALGORITHMS = ['RS256']
 API_AUDIENCE = 'coffee'
-#CLIENTID yut351BqpWHZtoP972bOlg6ZQCt3Bpub
+YOUR_CLIENT_ID = 'yut351BqpWHZtoP972bOlg6ZQCt3Bpub'
 
 ## AuthError Exception
 '''
@@ -148,3 +148,14 @@ def requires_auth(permission=''):
                 }, 401)
         return wrapper
     return requires_auth_decorator
+
+
+def logout():
+    auth0_logout_url = f"https://{AUTH0_DOMAIN}/v2/logout"
+    # Parameters for Auth0 logout
+    return_to = "http://localhost:8100/logout"
+    params = f"?client_id={YOUR_CLIENT_ID}&returnTo={return_to}"
+    
+    # Redirect the user to the Auth0 logout URL
+    return redirect(f"{auth0_logout_url}{params}")
+    
