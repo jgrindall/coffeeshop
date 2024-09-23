@@ -72,9 +72,11 @@ export class AuthService {
     this.token = '';
     this.payload = null;
     this.set_jwt();
+    window.location.href = "/logout"
   }
 
   can(permission: string) {
-    return this.payload && this.payload.permissions && this.payload.permissions.length && this.payload.permissions.indexOf(permission) >= 0;
+    console.log("checking permission", permission, this.payload, this.payload ? this.payload.permissions : []);
+    return this.payload && this.payload.permissions && this.payload.permissions.length && this.payload.permissions.includes(permission);
   }
 }

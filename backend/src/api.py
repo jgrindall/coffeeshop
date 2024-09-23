@@ -1,9 +1,12 @@
 from flask import Flask, request, jsonify, abort
 from .database.models import db_drop_and_create_all, setup_db, Drink
-from .auth.auth import AuthError, requires_auth
-
+from .auth.auth import requires_auth, logout
 
 def api(app):
+    
+    @app.route('/logout')
+    def logout():
+        logout()
 
     @app.route('/drinks')
     def get_drinks():
