@@ -1,9 +1,16 @@
-from flask import Flask, request, jsonify, abort
-from .database.models import db_drop_and_create_all, setup_db, Drink
+from flask import request, jsonify, abort
+from .database.models import db_drop_and_create_all, Drink
 from .auth.auth import requires_auth, auth_logout
 import json
 
 def api(app):
+
+    @app.route('/reset', methods=['GET'])
+    def reset():
+        db_drop_and_create_all()
+        return jsonify({
+            'success': True
+        })
 
     @app.route('/logout')
     def logout():

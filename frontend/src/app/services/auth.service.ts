@@ -103,7 +103,7 @@ export class AuthService {
   }
 
   can(permission: string) {
-    console.log("checking permission", permission, this.payload, this.payload ? this.payload.permissions : []);
+    console.log("checking permission", permission, 'in', this.payload ? this.payload.permissions : []);
     return this.payload && this.payload.permissions && this.payload.permissions.length && this.payload.permissions.includes(permission);
   }
 }

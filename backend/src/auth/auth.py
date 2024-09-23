@@ -32,6 +32,9 @@ def get_token_auth_header():
         }, 401)
 
     parts = auth.split()
+
+    print(parts, flush=True)
+
     if parts[0].lower() != 'bearer':
         raise AuthError({
             'code': 'invalid_header',
@@ -80,6 +83,9 @@ def verify_decode_jwt(token):
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
     jwks = json.loads(jsonurl.read())
     unverified_header = jwt.get_unverified_header(token)
+
+    print('unverified_header', unverified_header, flush=True)
+
     rsa_key = {}
     if 'kid' not in unverified_header:
         raise AuthError({
@@ -96,6 +102,8 @@ def verify_decode_jwt(token):
                 'n': key['n'],
                 'e': key['e']
             }
+
+    print('rsa_key', rsa_key, flush=True)
     if rsa_key:
         try:
             payload = jwt.decode(

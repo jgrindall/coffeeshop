@@ -9,9 +9,19 @@
 </ion-content>
 <ion-content *ngIf="auth.token">
   <ion-button (click)="auth.logout()" >Log Out</ion-button>
-      <ion-item style="min-height: 400px;">
+      <ion-item style="min-height: 200px;">
+        
         <ion-label>Active JWT</ion-label>
-        <ion-textarea rows="15" class="iontextarea" [ngModel]="auth.token" name="Active JWT" style="min-height: 400px;"></ion-textarea>
-        <ion-textarea rows="15" class="iontextarea" [ngModel]="auth.decodedToken" name="Decoded JWT" style="min-height: 400px;"></ion-textarea>
+        <ion-textarea rows="6" class="iontextarea" [ngModel]="auth.token" name="Active JWT" style="min-height: 200px;"></ion-textarea>
+
+       
+      </ion-item>
+
+      <ion-item style="min-height: 200px;">
+        
+       
+        <ion-label>Decoded</ion-label>
+        <ion-textarea rows="6" class="iontextarea" [ngModel]="auth.decodedToken" name="Decoded JWT" style="min-height: 200px;"></ion-textarea>
+        
       </ion-item>
 </ion-content>
