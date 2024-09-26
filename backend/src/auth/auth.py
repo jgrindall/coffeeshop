@@ -23,6 +23,9 @@ class AuthError(Exception):
 
 ## Auth Header
 
+"""
+Get the token. Return 401 if not found
+"""
 def get_token_auth_header():
     auth = request.headers.get('Authorization', None)
     if not auth:
@@ -70,7 +73,7 @@ def check_permissions(permission, payload):
             raise AuthError({
                 'code': 'invalid_permissions',
                 'description': 'Authorization failed.'
-            }, 401)
+            }, 403)
         else:
             return True
 
@@ -82,9 +85,8 @@ https://stackoverflow.com/questions/50236117/scraping-ssl-certificate-verify-fai
 def verify_decode_jwt(token):
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
     jwks = json.loads(jsonurl.read())
-    unverified_header = jwt.get_unverified_header(token)
 
-    print('unverified_header', unverified_header, flush=True)
+    unverified_header = jwt.get_unverified_header(token)
 
     rsa_key = {}
     if 'kid' not in unverified_header:
@@ -103,7 +105,6 @@ def verify_decode_jwt(token):
                 'e': key['e']
             }
 
-    print('rsa_key', rsa_key, flush=True)
     if rsa_key:
         try:
             payload = jwt.decode(
@@ -120,22 +121,22 @@ def verify_decode_jwt(token):
             raise AuthError({
                 'code': 'token_expired',
                 'description': 'Token expired.'
-            }, 401)
+            }, 403)
 
         except jwt.JWTClaimsError:
             raise AuthError({
                 'code': 'invalid_claims',
                 'description': 'Incorrect claims. Please, check the audience and issuer.'
-            }, 401)
+            }, 403)
         except Exception:
             raise AuthError({
                 'code': 'invalid_header',
                 'description': 'Unable to parse authentication token.'
-            }, 400)
+            }, 403)
     raise AuthError({
                 'code': 'invalid_header',
                 'description': 'Unable to find the appropriate key.'
-            }, 400)
+            }, 403)
 
 '''
 requires_auth(permission) decorator method

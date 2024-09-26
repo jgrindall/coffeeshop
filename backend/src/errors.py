@@ -23,6 +23,15 @@ def errors(app):
                 "message": "authentication failed"
             }), 401)
 
+    @app.errorhandler(403)
+    def forbidden(error):
+        return (
+            jsonify({
+                "success": False,
+                "error": 403,
+                "message": "forbidden"
+            }), 403)
+
     @app.errorhandler(404)
     def not_found(error):
         return (
