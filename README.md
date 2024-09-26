@@ -74,6 +74,11 @@ export NODE_OPTIONS=--openssl-legacy-provider
 
 ```
 
+## Walkthrough
+
+See walkthrough.mp4 for a complete walkthrough of setting up the app and running the tests
+
+
 
 
 
