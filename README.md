@@ -22,6 +22,9 @@ pip install -r requirements.txt
 ./run.sh
 ```
 
+Hit the "/populate" route once to drop and re-populate the database
+
+
 ## Frontend
 
 - Tested in node 16.x
@@ -42,7 +45,6 @@ npm i
 npm uninstall node-sass
 npm install node-sass@4.14.1
 ```
-> _tip_: **npm i** is shorthand for **npm install**
 
 > _note_: If you encounter an error related to python2 while installing dependencies, you might need to install Python  Use the following command if necessary:
 ```bash
