@@ -10,22 +10,26 @@ ALGORITHMS = ['RS256']
 API_AUDIENCE = 'coffee'
 YOUR_CLIENT_ID = 'yut351BqpWHZtoP972bOlg6ZQCt3Bpub'
 
-## AuthError Exception
+# AuthError Exception
 '''
 AuthError Exception
 A standardized way to communicate auth failure modes
 '''
+
+
 class AuthError(Exception):
     def __init__(self, error, status_code):
         self.error = error
         self.status_code = status_code
 
 
-## Auth Header
+# Auth Header
 
 """
 Get the token. Return 401 if not found
 """
+
+
 def get_token_auth_header():
     auth = request.headers.get('Authorization', None)
     if not auth:
@@ -60,12 +64,13 @@ def get_token_auth_header():
     return token
 
 
-
 """
 Check permission is present if required
 """
+
+
 def check_permissions(permission, payload):
-    if permission == '': # no permission required for this endpoint
+    if permission == '':  # no permission required for this endpoint
         return True
     else:
         # need to check
@@ -82,6 +87,8 @@ def check_permissions(permission, payload):
 NOTE urlopen has a common certificate error described here:
 https://stackoverflow.com/questions/50236117/scraping-ssl-certificate-verify-failed-error-for-http-en-wikipedia-org
 '''
+
+
 def verify_decode_jwt(token):
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
     jwks = json.loads(jsonurl.read())
@@ -138,9 +145,12 @@ def verify_decode_jwt(token):
                 'description': 'Unable to find the appropriate key.'
             }, 403)
 
+
 '''
 requires_auth(permission) decorator method
 '''
+
+
 def requires_auth(permission=''):
     def requires_auth_decorator(f):
         @wraps(f)
@@ -165,11 +175,10 @@ def auth_logout():
     # Parameters for Auth0 logout
     return_to = "http://localhost:8100"
     params = f"?client_id={YOUR_CLIENT_ID}&returnTo={return_to}"
-    
+
     # Redirect the user to the Auth0 logout URL
 
     url = f"{auth0_logout_url}{params}"
     print("Redirecting to Auth0 logout URL", url, flush=True)
 
     return redirect(url)
-    

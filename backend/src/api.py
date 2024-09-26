@@ -3,6 +3,7 @@ from .database.models import db_drop_and_create_all, Drink
 from .auth.auth import requires_auth, auth_logout
 import json
 
+
 def api(app):
 
     @app.route('/reset', methods=['GET'])
@@ -25,7 +26,6 @@ def api(app):
             'drinks': [drink.short() for drink in drinks]
         })
 
-    
     @app.route('/drinksdetail')
     @requires_auth('get:drinksdetail')
     def get_drinks_detail(payload):
@@ -36,7 +36,6 @@ def api(app):
             'drinks': [drink.long() for drink in drinks]
         })
 
-    
     @app.route('/drinks', methods=['POST'])
     @requires_auth('create:drinks')
     def create_drink(payload):
@@ -45,7 +44,7 @@ def api(app):
         recipe = data.get('recipe', None)
 
         if title is None or recipe is None or not isinstance(recipe, list) or len(recipe) == 0 or title.strip() == '':
-            print("title is None or recipe is None or not isinstance(recipe, list) or len(recipe) == 0 or title.strip() == ''", flush=True)
+            print("Invalid drink data", flush=True)
             abort(422)
 
         drink = Drink(title=title, recipe=json.dumps(recipe))

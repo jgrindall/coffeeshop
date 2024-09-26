@@ -12,6 +12,7 @@ setup_db(app)
     binds a flask application and a SQLAlchemy service
 '''
 
+
 def setup_db(app, filename="database.db"):
 
     database_path = "sqlite:///{}".format(os.path.join(project_dir, filename))
@@ -28,6 +29,7 @@ db_drop_and_create_all()
     can be used to initialize a clean database
 '''
 
+
 def db_drop_and_create_all():
     db.drop_all()
     db.create_all()
@@ -37,9 +39,8 @@ def db_drop_and_create_all():
         recipe='[{"name": "water", "color": "blue", "parts": 1}]'
     )
 
-
     drink.insert()
-# ROUTES
+
 
 '''
 Drink
@@ -64,7 +65,7 @@ class Drink(db.Model):
     def short(self):
         print(json.loads(self.recipe))
         short_recipe = [{
-            'color': r['color'], 
+            'color': r['color'],
             'parts': r['parts']
         } for r in json.loads(self.recipe)]
 
