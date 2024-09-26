@@ -13,31 +13,41 @@ Udacity has decided to open a new digitally enabled cafe for students to order d
 
 - Tested in Python 3.12
 
+- First install all libraries:
+
 ```bash
 pip install -r requirements.txt
 ```
 
+- Then run the server:
 
 ```bash
 ./run.sh
 ```
+- Finally, hit the "/reset" route in your browser once to drop and re-populate the database
 
-Hit the "/populate" route once to drop and re-populate the database
+```
+http://localhost:5000/reset
+```
+
+You should see {success: true}
+
 
 
 ## Frontend
 
 - Tested in node 16.x
 
+- First install the ionic cmd line tools:
+
 ```bash
 sudo npm install -g @ionic/cli
 ```
-
+- Next, install all dependencies:
 
 ```bash
 npm i
 ```
-
 
 > _note_: If you encounter issues with `node-sass`, ensure `sass` is installed instead:
 
@@ -51,10 +61,17 @@ npm install node-sass@4.14.1
 brew install python@2
 ```
 
+- Finally, run the dev server:
+
+```
+ionic serve
+```
+
+> _note_: If you see errors with "internal/crypto/hash" you may need to run:
 
 ```bash
 export NODE_OPTIONS=--openssl-legacy-provider
-ionic serve
+
 ```
 
 
