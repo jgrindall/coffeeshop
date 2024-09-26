@@ -21,6 +21,7 @@ def api(app):
         drinks = Drink.query.all()
         return jsonify({
             'success': True,
+            # color and parts only
             'drinks': [drink.short() for drink in drinks]
         })
 
@@ -31,6 +32,7 @@ def api(app):
         drinks = Drink.query.all()
         return jsonify({
             'success': True,
+            # includes 'name' in the recipe
             'drinks': [drink.long() for drink in drinks]
         })
 
@@ -43,6 +45,7 @@ def api(app):
         recipe = data.get('recipe', None)
 
         if title is None or recipe is None or not isinstance(recipe, list) or len(recipe) == 0 or title.strip() == '':
+            print("title is None or recipe is None or not isinstance(recipe, list) or len(recipe) == 0 or title.strip() == ''", flush=True)
             abort(422)
 
         drink = Drink(title=title, recipe=json.dumps(recipe))
